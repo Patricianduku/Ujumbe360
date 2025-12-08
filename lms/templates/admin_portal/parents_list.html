@@ -1,0 +1,33 @@
+{% extends 'admin_portal/base.html' %}
+{% block title %}Parents{% endblock %}
+
+{% block content %}
+<h1>Parents</h1>
+<a href="{% url 'parents_create' %}" class="btn btn-primary mb-3">Add Parent</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for parent in parents %}
+        <tr>
+            <td>{{ parent.id }}</td>
+            <td>{{ parent.name }}</td>
+            <td>{{ parent.phone }}</td>
+            <td>
+                <a href="{% url 'parents_update' parent.id %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'parents_delete' parent.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">No parents found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

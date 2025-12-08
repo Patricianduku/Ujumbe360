@@ -1,0 +1,14 @@
+{% extends 'admin_portal/base.html' %}
+
+{% block title %}Delete Grade{% endblock %}
+
+{% block content %}
+<h1>Delete Grade</h1>
+<p>Are you sure you want to delete this grade for "{{ grade.student.name }}" in "{{ grade.subject }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a href="{% url 'grades_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,13 @@
+# Created by venv; see https://docs.python.org/3/library/venv.html
+# Python cache
+__pycache__/
+*.pyc
+
+# Django database
+db.sqlite3
+db_backup.sqlite3
+
+# Environment
+venv/
+.env
+

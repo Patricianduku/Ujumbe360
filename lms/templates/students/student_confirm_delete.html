@@ -1,0 +1,50 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}Delete Student - Admin Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Delete Student</h2>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle"></i> Are you sure you want to delete this student?
+        </div>
+        
+        <div class="mb-4">
+            <h5>Student Details:</h5>
+            <table class="table table-bordered">
+                <tr>
+                    <th width="200">Admission Number:</th>
+                    <td>{{ student.admission_number }}</td>
+                </tr>
+                <tr>
+                    <th>Name:</th>
+                    <td>{{ student.full_name }}</td>
+                </tr>
+                <tr>
+                    <th>Class:</th>
+                    <td>{{ student.class_level }} {{ student.stream|default:"" }}</td>
+                </tr>
+                <tr>
+                    <th>Parent:</th>
+                    <td>{{ student.parent_name }} - {{ student.parent_phone }}</td>
+                </tr>
+            </table>
+        </div>
+        
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-trash"></i> Yes, Delete
+            </button>
+            <a href="{% url 'student_list' %}" class="btn btn-secondary">
+                <i class="bi bi-x-circle"></i> Cancel
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

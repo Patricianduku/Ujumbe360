@@ -1,0 +1,26 @@
+{% extends 'base_admin.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ action }} Attendance{% endblock %}
+
+{% block content %}
+<div class="page-header mb-3">
+    <h2 class="mb-0">{{ action }} Attendance</h2>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            {% crispy form %}
+        </form>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a href="{% url 'attendance_list' %}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Attendance
+    </a>
+</div>
+{% endblock %}
+

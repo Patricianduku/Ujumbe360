@@ -1,0 +1,48 @@
+{% extends 'base_admin.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Add Payment - {{ student.full_name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Add Payment</h2>
+    <p class="text-muted mb-0">{{ student.full_name }} ({{ student.admission_number }})</p>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {% crispy form %}
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">Payment Summary</h6>
+            </div>
+            <div class="card-body">
+                <p><strong>Total Required:</strong><br>KSh {{ total_required|floatformat:2 }}</p>
+                <p><strong>Current Balance:</strong><br>
+                    <span class="{% if current_balance > 0 %}text-danger{% else %}text-success{% endif %}">
+                        KSh {{ current_balance|floatformat:2 }}
+                    </span>
+                </p>
+                <hr>
+                <small class="text-muted">After this payment, the balance will be automatically calculated.</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a href="{% url 'student_fee_detail' student.id %}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Fee Statement
+    </a>
+</div>
+{% endblock %}
+

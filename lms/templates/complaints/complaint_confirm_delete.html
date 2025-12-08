@@ -1,0 +1,54 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}Delete Complaint - Admin Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Delete Complaint</h2>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle"></i> Are you sure you want to delete this complaint?
+        </div>
+        
+        <div class="mb-4">
+            <h5>Complaint Details:</h5>
+            <table class="table table-bordered">
+                <tr>
+                    <th width="200">Student:</th>
+                    <td>{{ complaint.student.full_name }} ({{ complaint.student.admission_number }})</td>
+                </tr>
+                <tr>
+                    <th>Parent:</th>
+                    <td>{{ complaint.parent_name }}</td>
+                </tr>
+                <tr>
+                    <th>Subject:</th>
+                    <td>{{ complaint.subject }}</td>
+                </tr>
+                <tr>
+                    <th>Status:</th>
+                    <td>{{ complaint.status }}</td>
+                </tr>
+                <tr>
+                    <th>Date:</th>
+                    <td>{{ complaint.created_at|date:"M d, Y H:i" }}</td>
+                </tr>
+            </table>
+        </div>
+        
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-trash"></i> Yes, Delete
+            </button>
+            <a href="{% url 'complaint_list' %}" class="btn btn-secondary">
+                <i class="bi bi-x-circle"></i> Cancel
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

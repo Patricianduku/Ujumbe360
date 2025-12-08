@@ -1,0 +1,13 @@
+{% extends 'admin_portal/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Parent Form{% endblock %}
+
+{% block content %}
+<h1>Parent Form</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <a href="{% url 'parents_list' %}" class="btn btn-secondary mt-2">Cancel</a>
+</form>
+{% endblock %}

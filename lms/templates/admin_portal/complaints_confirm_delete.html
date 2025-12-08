@@ -1,0 +1,14 @@
+{% extends 'admin_portal/base.html' %}
+
+{% block title %}Delete Complaint{% endblock %}
+
+{% block content %}
+<h1>Delete Complaint</h1>
+<p>Are you sure you want to delete this complaint from "{{ complaint.student.name }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a href="{% url 'complaints_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

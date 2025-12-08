@@ -1,0 +1,42 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}Delete Fee Structure - Admin Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Delete Fee Structure</h2>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle"></i> Are you sure you want to delete this fee structure?
+        </div>
+        
+        <div class="mb-4">
+            <h5>Fee Structure Details:</h5>
+            <table class="table table-bordered">
+                <tr>
+                    <th width="200">Class Level:</th>
+                    <td>{{ fee_structure.class_level }}</td>
+                </tr>
+                <tr>
+                    <th>Amount Required:</th>
+                    <td>KSh {{ fee_structure.amount_required|floatformat:2 }}</td>
+                </tr>
+            </table>
+        </div>
+        
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-trash"></i> Yes, Delete
+            </button>
+            <a href="{% url 'fee_list' %}" class="btn btn-secondary">
+                <i class="bi bi-x-circle"></i> Cancel
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

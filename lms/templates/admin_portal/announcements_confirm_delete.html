@@ -1,0 +1,14 @@
+{% extends 'admin_portal/base.html' %}
+
+{% block title %}Delete Announcement{% endblock %}
+
+{% block content %}
+<h1>Delete Announcement</h1>
+<p>Are you sure you want to delete "{{ announcement.title }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a href="{% url 'announcements_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

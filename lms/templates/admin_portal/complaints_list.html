@@ -1,0 +1,35 @@
+{% extends 'admin_portal/base.html' %}
+{% block title %}Complaints{% endblock %}
+
+{% block content %}
+<h1>Complaints</h1>
+<a href="{% url 'complaints_create' %}" class="btn btn-primary mb-3">Add Complaint</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Student / Parent</th>
+            <th>Complaint</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for complaint in complaints %}
+        <tr>
+            <td>{{ complaint.id }}</td>
+            <td>{{ complaint.student.name }}</td>
+            <td>{{ complaint.message }}</td>
+            <td>{{ complaint.status }}</td>
+            <td>
+                <a href="{% url 'complaints_update' complaint.id %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'complaints_delete' complaint.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No complaints found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

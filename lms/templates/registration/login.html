@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Ujumbe360</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e4ede9 0%, #6B21A8 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            padding: 20px;
+        }
+        
+        .login-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            max-width: 450px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .login-header {
+            background: linear-gradient(135deg, #6B21A8 0%, #4F46E5 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .login-body {
+            padding: 40px;
+        }
+        
+        .btn-login {
+            background: linear-gradient(135deg, #6B21A8 0%, #4F46E5 100%);
+            border: none;
+            padding: 12px;
+            font-weight: 600;
+        }
+        
+        .btn-login:hover {
+            background: linear-gradient(135deg, #5B1A8A 0%, #4338CA 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(107, 33, 168, 0.4);
+        }
+        
+        .form-control {
+            position: relative;
+            z-index: 10;
+            pointer-events: auto !important;
+        }
+        
+        .form-control:focus {
+            z-index: 11;
+            pointer-events: auto !important;
+        }
+        
+        .login-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .login-tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .login-tab.active {
+            background: linear-gradient(135deg, #6B21A8 0%, #4F46E5 100%);
+            color: white;
+            border-color: #6B21A8;
+        }
+        
+        .login-form {
+            display: none;
+        }
+        
+        .login-form.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="login-header">
+            <h2 class="mb-0">
+                <i class="bi bi-mortarboard"></i> Ujumbe360
+            </h2>
+            <p class="mb-0 mt-2">School Management System</p>
+        </div>
+        
+        <div class="login-body">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    <strong>Login failed!</strong> Please check your credentials and try again.
+                </div>
+            {% endif %}
+            
+            <!-- Login Type Tabs -->
+            <div class="login-tabs">
+                <div class="login-tab active" data-type="parent" onclick="switchLoginType(event, 'parent')">
+                    <i class="bi bi-person"></i> Parent Login
+                </div>
+                <div class="login-tab" data-type="staff" onclick="switchLoginType(event, 'staff')">
+                    <i class="bi bi-shield-check"></i> Staff Login
+                </div>
+            </div>
+            
+            <!-- Parent Login Form (Admission Number + Parent Phone/Password) -->
+            <form method="post" id="parent-form" class="login-form active">
+                {% csrf_token %}
+                <input type="hidden" name="login_type" value="parent">
+                
+                <div class="mb-3">
+                    <label for="parent_admission" class="form-label">
+                        <i class="bi bi-card-text"></i> Child's Admission Number
+                    </label>
+                    <input type="text" 
+                           name="username" 
+                           class="form-control form-control-lg" 
+                           id="parent_admission" 
+                           placeholder="Enter admission number"
+                           required
+                           autocomplete="off">
+                </div>
+
+                <div class="mb-4">
+                    <label for="parent_phone" class="form-label">
+                        <i class="bi bi-phone"></i> Parent Phone / Password
+                    </label>
+                    <input type="password" 
+                           name="password" 
+                           class="form-control form-control-lg" 
+                           id="parent_phone" 
+                           placeholder="Enter phone number"
+                           required
+                           autocomplete="off">
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-login w-100">
+                    <i class="bi bi-box-arrow-in-right"></i> Login as Parent
+                </button>
+                
+                <div class="text-center mt-3">
+                    <small class="text-muted">
+                        <i class="bi bi-info-circle"></i> Enter your child's admission number to access the parent portal
+                    </small>
+                </div>
+            </form>
+            
+            <!-- Staff Login Form (Username & Password) -->
+            <form method="post" id="staff-form" class="login-form">
+                {% csrf_token %}
+                <input type="hidden" name="login_type" value="staff">
+                
+                <div class="mb-3">
+                    <label for="staff_username" class="form-label">
+                        <i class="bi bi-person"></i> Username
+                    </label>
+                    <input type="text" 
+                           name="username" 
+                           class="form-control form-control-lg" 
+                           id="staff_username" 
+                           placeholder="Enter username"
+                           required
+                           autocomplete="username">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="staff_password" class="form-label">
+                        <i class="bi bi-lock"></i> Password
+                    </label>
+                    <input type="password" 
+                           name="password" 
+                           class="form-control form-control-lg" 
+                           id="staff_password" 
+                           placeholder="Enter password"
+                           required
+                           autocomplete="current-password">
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-login w-100">
+                    <i class="bi bi-box-arrow-in-right"></i> Login as Staff
+                </button>
+                
+                <div class="text-center mt-3">
+                    <small class="text-muted">
+                        <i class="bi bi-info-circle"></i> Use your staff credentials to access the admin portal
+                    </small>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function switchLoginType(evt, type) {
+            // Update tabs
+            document.querySelectorAll('.login-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            evt.currentTarget.classList.add('active');
+            
+            // Update forms
+            document.getElementById('parent-form').classList.remove('active');
+            document.getElementById('staff-form').classList.remove('active');
+            
+            if (type === 'parent') {
+                document.getElementById('parent-form').classList.add('active');
+                document.getElementById('parent_admission').focus();
+            } else {
+                document.getElementById('staff-form').classList.add('active');
+                document.getElementById('staff_username').focus();
+            }
+        }
+        
+        // Ensure inputs are always editable
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input[type="text"], input[type="password"]');
+            inputs.forEach(input => {
+                input.style.pointerEvents = 'auto';
+                input.style.zIndex = '10';
+                input.addEventListener('focus', function() {
+                    this.style.zIndex = '11';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

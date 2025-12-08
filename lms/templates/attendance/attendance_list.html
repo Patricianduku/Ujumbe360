@@ -1,0 +1,88 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}Attendance - Admin{% endblock %}
+
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h2 class="mb-0">Attendance Records</h2>
+        <p class="text-muted mb-0">Track daily attendance</p>
+    </div>
+    <a href="{% url 'attendance_create' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Add Attendance
+    </a>
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-4">
+                <input type="text" name="student" value="{{ student_q }}" class="form-control" placeholder="Search by admission number">
+            </div>
+            <div class="col-md-4">
+                <select name="status" class="form-select">
+                    <option value="">All Statuses</option>
+                    {% for value,label in statuses %}
+                        <option value="{{ value }}" {% if status_q == value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4 d-grid">
+                <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Filter</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Admission</th>
+                        <th>Student</th>
+                        <th>Status</th>
+                        <th>Remarks</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in records %}
+                    <tr>
+                        <td>{{ record.date }}</td>
+                        <td><strong>{{ record.student.admission_number }}</strong></td>
+                        <td>{{ record.student.full_name }}</td>
+                        <td>
+                            <span class="badge 
+                                {% if record.status == 'Present' %}bg-success
+                                {% elif record.status == 'Late' %}bg-warning
+                                {% elif record.status == 'Excused' %}bg-info
+                                {% else %}bg-danger{% endif %}">
+                                {{ record.status }}
+                            </span>
+                        </td>
+                        <td>{{ record.remarks|default:"-" }}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <a href="{% url 'attendance_update' record.id %}" class="btn btn-outline-primary"><i class="bi bi-pencil"></i></a>
+                                <a href="{% url 'attendance_delete' record.id %}" class="btn btn-outline-danger"><i class="bi bi-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">
+                            <i class="bi bi-inbox" style="font-size: 2rem;"></i>
+                            <p class="mt-2 mb-0">No attendance records found.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

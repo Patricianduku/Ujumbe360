@@ -1,0 +1,35 @@
+{% extends 'admin_portal/base.html' %}
+{% block title %}Grades{% endblock %}
+
+{% block content %}
+<h1>Grades</h1>
+<a href="{% url 'grades_create' %}" class="btn btn-primary mb-3">Add Grade</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Student</th>
+            <th>Subject</th>
+            <th>Score</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for grade in grades %}
+        <tr>
+            <td>{{ grade.id }}</td>
+            <td>{{ grade.student.name }}</td>
+            <td>{{ grade.subject }}</td>
+            <td>{{ grade.score }}</td>
+            <td>
+                <a href="{% url 'grades_update' grade.id %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'grades_delete' grade.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No grades found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

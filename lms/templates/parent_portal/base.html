@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Parent Portal - Ujumbe360{% endblock %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background: #0E2954;
+            color: white;
+            padding: 20px;
+        }
+        .sidebar a {
+            color: white;
+            display: block;
+            padding: 12px 0;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            background: #1F6E8C;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>Parent Portal</h3>
+        <hr>
+
+        <a href="{% url 'parent_dashboard' %}">Dashboard</a>
+        <a href="{% url 'parent_children' %}">My Children</a>
+        <a href="{% url 'parent_grades' %}">Grades</a>
+        <a href="{% url 'parent_fees' %}">Fees</a>
+        <a href="{% url 'parent_announcements' %}">Announcements</a>
+        <a href="{% url 'parent_complaints' %}">Complaints</a>
+
+        <hr>
+        <form method="POST" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger w-100">Logout</button>
+</form>
+
+    </div>
+
+    <!-- Page Content -->
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+</html>

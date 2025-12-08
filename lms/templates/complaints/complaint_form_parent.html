@@ -1,0 +1,21 @@
+{% extends 'parent_portal/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Submit Complaint - Ujumbe360{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <h2>Submit Complaint</h2>
+    <p class="text-muted">Submit a complaint or inquiry about your child</p>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            {% crispy form %}
+        </form>
+    </div>
+</div>
+{% endblock %}
+

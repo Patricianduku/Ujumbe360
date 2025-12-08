@@ -1,0 +1,37 @@
+{% extends 'parent_portal/base.html' %}
+
+{% block title %}Fees - Parent Portal{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2>Fee Management</h2>
+        <p class="text-muted mb-0">View fee statements and payment history</p>
+    </div>
+</div>
+
+{% if student %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="bi bi-cash-coin"></i> Fee Information for {{ student.full_name }}
+        </h5>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> Fee details will be displayed here. This section will show outstanding balances, payment history, and fee structures.
+        </div>
+        
+        <div class="d-flex gap-2 flex-wrap">
+            <a href="{% url 'student_fee_detail' student.id %}" class="btn btn-success">
+                <i class="bi bi-receipt"></i> View Detailed Fee Statement
+            </a>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-warning">
+    <i class="bi bi-exclamation-triangle"></i> No student information available.
+</div>
+{% endif %}
+{% endblock %}
