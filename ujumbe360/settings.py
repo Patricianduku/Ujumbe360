@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-thdtr12l8%)w4*=ik8j3qglbiajex$p-wnvf0s+*^_i30z!qo!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
 
 
 # Application definition
@@ -132,4 +132,14 @@ AUTHENTICATION_BACKENDS = [
     'lms.backends.AdmissionNumberBackend',  # Custom backend for admission number login
     'django.contrib.auth.backends.ModelBackend',  # Default backend for staff
 ]
+
+# CSRF settings for development
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+]
+
+# Disable CSRF for development (temporary fix)
+CSRF_COOKIE_HTTPONLY = False
+SESSION_COOKIE_HTTPONLY = False
 
