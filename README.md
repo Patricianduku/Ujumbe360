@@ -2,9 +2,9 @@
 
 Ujumbe360 is a comprehensive Django-based School Management System designed to streamline educational institution operations. It provides separate portals for administrators, teachers, and parents to manage students, fees, grades, attendance, announcements, and complaints.
 
-## 🌟 Features
+## Features
 
-### 👨‍💼 Admin Portal
+###  Admin Portal
 - **Student Management**: Add, edit, and manage student records
 - **Fee Management**: Set fee structures and track payments
 - **Grade Management**: Create exams and enter student grades
@@ -13,7 +13,7 @@ Ujumbe360 is a comprehensive Django-based School Management System designed to s
 - **Complaint Management**: Handle parent and student complaints
 - **Dashboard**: Comprehensive overview of school statistics
 
-### 👨‍👩‍👧‍👦 Parent Portal
+###  Parent Portal
 - **Dashboard**: Overview of child's academic and financial status
 - **My Children**: View detailed child information
 - **Grades**: Access academic performance and reports
@@ -21,13 +21,13 @@ Ujumbe360 is a comprehensive Django-based School Management System designed to s
 - **Announcements**: Stay updated with school news
 - **Complaints**: Submit and track complaints
 
-### 📱 User Features
+###  User Features
 - **Dual Authentication**: Separate login for staff and parents
 - **Responsive Design**: Works on desktop and mobile devices
 - **Real-time Updates**: Live data across all portals
 - **Secure Access**: Role-based permissions and data protection
 
-## 🏗️ Technology Stack
+##  Technology Stack
 
 - **Backend**: Django 4.x
 - **Database**: SQLite (development) / PostgreSQL (production ready)
@@ -36,7 +36,7 @@ Ujumbe360 is a comprehensive Django-based School Management System designed to s
 - **Icons**: Bootstrap Icons
 - **Authentication**: Django's built-in authentication system
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 Ujumbe360/
@@ -73,7 +73,7 @@ Ujumbe360/
         └── complaints/
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -126,7 +126,7 @@ Ujumbe360/
    - Parent Portal: http://127.0.0.1:8000/parent-portal/
    - Login: http://127.0.0.1:8000/login/
 
-## 👥 Default User Roles
+##  Default User Roles
 
 ### Admin/Staff Login
 - Username: Your chosen username during superuser creation
@@ -138,7 +138,7 @@ Ujumbe360/
 - Password: Parent's phone number or custom password
 - Access: Limited to their child's information
 
-## 📊 Database Models
+##  Database Models
 
 ### Core Models
 - **Student**: Student records and information
@@ -150,7 +150,7 @@ Ujumbe360/
 - **Announcement**: School announcements and notices
 - **Complaint**: Parent/student complaints and threads
 
-## 🔧 Configuration
+##  Configuration
 
 ### Environment Variables
 Create a `.env` file in the project root:
@@ -169,14 +169,14 @@ Modify `ujumbe360/settings.py` for:
 - File upload settings
 - Security settings
 
-## 🧪 Testing
+##  Testing
 
 Run the test suite:
 ```bash
 python manage.py test
 ```
 
-## 📦 Deployment
+##  Deployment
 
 ### Production Checklist
 - [ ] Set `DEBUG=False` in settings
@@ -194,7 +194,7 @@ docker build -t ujumbe360 .
 docker run -p 8000:8000 ujumbe360
 ```
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
@@ -202,25 +202,19 @@ docker run -p 8000:8000 ujumbe360
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📝 License
+##  License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
 
-For support and questions:
-- Create an issue in the GitHub repository
-- Email: support@ujumbe360.com
-- Documentation: [Wiki](https://github.com/Patricianduku/Ujumbe360/wiki)
-
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - Django Framework for the robust backend
 - Bootstrap for the responsive UI components
 - Bootstrap Icons for the icon set
 - All contributors who have helped improve this project
 
-## 📈 Future Roadmap
+##  Future Roadmap
 
 - [ ] Mobile application (React Native)
 - [ ] Advanced reporting and analytics
@@ -235,4 +229,3 @@ For support and questions:
 
 **Ujumbe360** - Empowering educational institutions with modern technology solutions.
 
-Made with ❤️ by the development team
