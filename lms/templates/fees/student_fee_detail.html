@@ -1,20 +1,17 @@
-{% extends 'base.html' %}
+{% extends 'parent_portal/base_parent.html' %}
 
 {% block title %}Fee Statement - {{ student.full_name }}{% endblock %}
 
 {% block content %}
-<div class="mb-4">
-    <div class="d-flex justify-content-between align-items-center">
-        <div>
-            <h2>Fee Statement</h2>
-            <p class="text-muted mb-0">{{ student.full_name }} ({{ student.admission_number }})</p>
-        </div>
-        {% if user.is_staff or user.is_superuser %}
-        <a href="{% url 'add_payment' student.id %}" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> Add Payment
-        </a>
-        {% endif %}
-    </div>
+<div class="page-header fade-in">
+    <h1>Fee Statement</h1>
+    <p class="text-secondary-green mb-0">{{ student.full_name }} ({{ student.admission_number }})</p>
+    {% if balance > 0 %}
+    <!-- M-Pesa Payment Button -->
+    <button type="button" class="btn btn-success btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#mpesaPaymentModal">
+        <i class="bi bi-phone"></i> Pay with M-Pesa
+    </button>
+    {% endif %}
 </div>
 
 <div class="row">
@@ -130,5 +127,81 @@
         </a>
     {% endif %}
 </div>
-{% endblock %}
 
+<!-- M-Pesa Payment Modal -->
+{% if balance > 0 %}
+<div class="modal fade" id="mpesaPaymentModal" tabindex="-1" aria-labelledby="mpesaPaymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mpesaPaymentModalLabel">
+                    <i class="bi bi-phone text-success"></i> Pay with M-Pesa
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{% url 'initiate_mpesa_payment' student.id %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="alert alert-info">
+                        <small>
+                            <i class="bi bi-info-circle"></i>
+                            You will receive an STK push on your phone to complete the payment.
+                        </small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="phone_number" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="phone_number" name="phone_number" 
+                               value="{{ student.parent_phone }}" placeholder="2547XXXXXXXX" required>
+                        <div class="form-text">Enter your M-Pesa registered phone number (e.g., 2547XXXXXXXX)</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="amount" class="form-label">Amount to Pay</label>
+                        <div class="input-group">
+                            <span class="input-group-text">KSh</span>
+                            <input type="number" class="form-control" id="amount" name="amount" 
+                                   min="1" max="{{ balance|floatformat:2 }}" step="0.01" 
+                                   value="{{ balance|floatformat:2 }}" required>
+                        </div>
+                        <div class="form-text">Maximum amount: KSh {{ balance|floatformat:2 }}</div>
+                    </div>
+                    
+                    <div class="alert alert-warning">
+                        <small>
+                            <strong>Payment Summary:</strong><br>
+                            Student: {{ student.full_name }}<br>
+                            Amount: KSh <span id="paymentAmount">{{ balance|floatformat:2 }}</span><br>
+                            Balance after payment: KSh <span id="remainingBalance">0.00</span>
+                        </small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-phone"></i> Send STK Push
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const amountInput = document.getElementById('amount');
+    const paymentAmountSpan = document.getElementById('paymentAmount');
+    const remainingBalanceSpan = document.getElementById('remainingBalance');
+    const totalBalance = {{ balance|floatformat:2 }};
+    
+    amountInput.addEventListener('input', function() {
+        const amount = parseFloat(this.value) || 0;
+        const remaining = Math.max(0, totalBalance - amount);
+        
+        paymentAmountSpan.textContent = amount.toFixed(2);
+        remainingBalanceSpan.textContent = remaining.toFixed(2);
+    });
+});
+</script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'parent_portal/base_parent.html' %}
+
+{% block title %}Student Information - {{ student.full_name }}{% endblock %}
+
+{% block content %}
+<div class="page-header fade-in">
+    <h1>Student Information</h1>
+    <p class="text-secondary-green mb-0">{{ student.full_name }} ({{ student.admission_number }})</p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Personal Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Full Name:</strong> {{ student.full_name }}</p>
+                <p><strong>Admission Number:</strong> {{ student.admission_number }}</p>
+                <p><strong>Gender:</strong> {{ student.get_gender_display }}</p>
+                <p><strong>Date of Birth:</strong> {{ student.date_of_birth|date:"M d, Y" }}</p>
+                <p><strong>Age:</strong> {{ age }} years</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Academic Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Class:</strong> {{ student.class_level }} {{ student.stream|default:"" }}</p>
+                <p><strong>Current Status:</strong> <span class="badge bg-success">Active</span></p>
+                <p><strong>Date Enrolled:</strong> {{ student.created_at|date:"M d, Y" }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Parent/Guardian Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Parent Name:</strong> {{ student.parent_name }}</p>
+                <p><strong>Parent Phone:</strong> {{ student.parent_phone }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <a href="{% url 'parent_fees' %}" class="btn btn-primary me-2">
+                    <i class="bi bi-cash-coin"></i> View Fees
+                </a>
+                <a href="{% url 'parent_grades' %}" class="btn btn-primary me-2">
+                    <i class="bi bi-clipboard-data"></i> View Grades
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
