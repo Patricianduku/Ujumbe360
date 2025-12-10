@@ -481,19 +481,86 @@ p {
     border-color: var(--primary-dark);
 }
 
+/* Sidebar Overlay for Mobile */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+    display: none;
+}
+
+/* Responsive Design */
+
+/* Large Desktop */
+@media (min-width: 1367px) {
+    .sidebar {
+        width: 280px;
+    }
+    
+    .content-wrapper {
+        margin-left: 280px;
+    }
+    
+    .content-area {
+        padding: 2rem;
+        max-width: none;
+    }
+}
+
+/* Tablet Landscape and Small Desktop */
+@media (min-width: 1025px) and (max-width: 1366px) {
+    .sidebar {
+        width: 240px;
+    }
+    
+    .content-wrapper {
+        margin-left: 240px;
+    }
+    
+    .content-area {
+        padding: 1.5rem;
+    }
+}
+
+/* Tablet Portrait */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .sidebar {
+        width: 220px;
+    }
+    
+    .content-wrapper {
+        margin-left: 220px;
+    }
+    
+    .content-area {
+        padding: 1.25rem;
+    }
+    
+    .page-header {
+        margin: -1.25rem -1.25rem 1.5rem -1.25rem;
+    }
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .sidebar {
         transform: translateX(-100%);
         width: 280px;
+        z-index: 1050;
     }
     
     .sidebar.show {
         transform: translateX(0);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     }
     
     .content-wrapper {
         margin-left: 0;
+        width: 100%;
     }
     
     .content-area {
@@ -524,6 +591,40 @@ p {
     
     .btn {
         padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    /* Mobile specific adjustments */
+    .row {
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+    }
+    
+    .col-md-3,
+    .col-md-4,
+    .col-md-6,
+    .col-md-8,
+    .col-md-12 {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* Stack columns on mobile */
+    .row > [class*="col-"] {
+        width: 100%;
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+    
+    /* Better button sizing on mobile */
+    .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Table responsiveness */
+    .table-responsive {
         font-size: 0.875rem;
     }
 }
