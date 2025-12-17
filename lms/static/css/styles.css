@@ -191,10 +191,14 @@ p {
     background-color: var(--light-background);
     min-height: 100vh;
     transition: margin-left 0.3s ease;
+    width: calc(100% - 280px);
+    overflow-x: hidden;
 }
 
 .content-area {
     padding: 2rem;
+    max-width: 100%;
+    margin: 0 auto;
 }
 
 .page-header {
@@ -503,11 +507,12 @@ p {
     
     .content-wrapper {
         margin-left: 280px;
+        width: calc(100% - 280px);
     }
     
     .content-area {
-        padding: 2rem;
-        max-width: none;
+        padding: 2.5rem;
+        max-width: 100%;
     }
 }
 
@@ -519,10 +524,12 @@ p {
     
     .content-wrapper {
         margin-left: 240px;
+        width: calc(100% - 240px);
     }
     
     .content-area {
-        padding: 1.5rem;
+        padding: 2rem;
+        max-width: 100%;
     }
 }
 
@@ -534,10 +541,12 @@ p {
     
     .content-wrapper {
         margin-left: 220px;
+        width: calc(100% - 220px);
     }
     
     .content-area {
-        padding: 1.25rem;
+        padding: 1.5rem;
+        max-width: 100%;
     }
     
     .page-header {
